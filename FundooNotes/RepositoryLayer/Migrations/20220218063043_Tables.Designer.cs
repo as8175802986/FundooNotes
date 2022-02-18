@@ -3,47 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryLayer.Services;
 
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(FundooDbContext))]
-    partial class FundooDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220218063043_Tables")]
+    partial class Tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("RepositoryLayer.Entities.Label", b =>
-                {
-                    b.Property<int>("LabelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("LabelName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NotesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Userid")
-                        .HasColumnType("int");
-
-                    b.HasKey("LabelId");
-
-                    b.HasIndex("NotesId");
-
-                    b.HasIndex("Userid");
-
-                    b.ToTable("Label");
-                });
 
             modelBuilder.Entity("RepositoryLayer.Entities.Note", b =>
                 {
@@ -127,25 +103,6 @@ namespace RepositoryLayer.Migrations
                         .HasFilter("[email] IS NOT NULL");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("RepositoryLayer.Entities.Label", b =>
-                {
-                    b.HasOne("RepositoryLayer.Entities.Note", "Notes")
-                        .WithMany()
-                        .HasForeignKey("NotesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RepositoryLayer.Entities.UserModel", "User")
-                        .WithMany()
-                        .HasForeignKey("Userid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Notes");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RepositoryLayer.Entities.Note", b =>
