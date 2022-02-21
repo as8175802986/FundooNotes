@@ -11,6 +11,7 @@ namespace RepositoryLayer.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
+        [ForeignKey("Note")]
         public int NotesId { get; set; }
 
         [ForeignKey("Users")]

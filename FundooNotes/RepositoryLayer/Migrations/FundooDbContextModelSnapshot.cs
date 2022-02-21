@@ -19,6 +19,39 @@ namespace RepositoryLayer.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("RepositoryLayer.Entities.AddressModel", b =>
+                {
+                    b.Property<int>("AddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Userid")
+                        .HasColumnType("int");
+
+                    b.HasKey("AddressId");
+
+                    b.HasIndex("Userid");
+
+                    b.ToTable("AddressModels");
+                });
+
             modelBuilder.Entity("RepositoryLayer.Entities.Label", b =>
                 {
                     b.Property<int>("LabelId")
@@ -129,6 +162,15 @@ namespace RepositoryLayer.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("RepositoryLayer.Entities.AddressModel", b =>
+                {
+                    b.HasOne("RepositoryLayer.Entities.UserModel", "User")
+                        .WithMany("AddressModels")
+                        .HasForeignKey("Userid");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("RepositoryLayer.Entities.Label", b =>
                 {
                     b.HasOne("RepositoryLayer.Entities.Note", "Notes")
@@ -161,6 +203,8 @@ namespace RepositoryLayer.Migrations
 
             modelBuilder.Entity("RepositoryLayer.Entities.UserModel", b =>
                 {
+                    b.Navigation("AddressModels");
+
                     b.Navigation("Notes");
                 });
 #pragma warning restore 612, 618

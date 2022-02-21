@@ -30,7 +30,7 @@ namespace FundooNotes.Controllers
             try
             {
                 int Userid = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userId").Value);
-                
+
                 await labelBL.CreateLabel(labelModel, Userid, NotesId);
                 return this.Ok(new { success = true, message = "Label added successfully", response = NotesId });
             }
@@ -121,6 +121,8 @@ namespace FundooNotes.Controllers
         }
     }
 
-
 }
+
+
+
 

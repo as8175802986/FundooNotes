@@ -102,7 +102,7 @@ namespace RepositoryLayer.Class
                     new Claim("email", email.ToString()),
                     new Claim("userId", Userid.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddHours(3),
+                Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials =
                 new SigningCredentials(
                     new SymmetricSecurityKey(tokenKey),
@@ -116,8 +116,8 @@ namespace RepositoryLayer.Class
         {
             try
             {
-                UserModel checkemail = dbContext.Users.FirstOrDefault(e => e.email == email);
-                
+                var checkemail = dbContext.Users.FirstOrDefault(e => e.email == email);
+
                 if (checkemail != null)
                 {
                     MessageQueue queue;
@@ -209,9 +209,7 @@ namespace RepositoryLayer.Class
                     Console.WriteLine("Access is denied. " +
                         "Queue might be a system queue.");
                 }
-               // Handle other sources of MessageQueueException.
             }
-
         }
 
 

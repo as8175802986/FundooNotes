@@ -5,16 +5,18 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RepositoryLayer.Interface
+namespace BusinessLayer.Interface
 {
-    public interface IUserAddresRL
+    public interface IUserAddressBL
     {
         Task AddUserAddress(AddressPostModel addressPostModel, int Userid);
+
         //Task<List<AddressModel>> GetUserAddresses(int Userid);
+
         //Task UpdateUserAddress(AddressModel addressModel, int Userid, int AddressId);
-        Task DeleteAddress(int AddressId);
-        //Task UpdateUserAddress(int Userid, AddressModel addressModel);
+        public Task UpdateAddress(int Userid, AddressPostModel addressPostModel);
         Task<List<AddressModel>> GetAllAddress(int userid);
-        Task UpdateAddress(int userid, AddressPostModel addressPostModel);
+
+        Task DeleteAddress(int AddressId);
     }
 }

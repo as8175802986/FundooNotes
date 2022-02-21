@@ -28,6 +28,29 @@ namespace RepositoryLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AddressModels",
+                columns: table => new
+                {
+                    AddressId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Userid = table.Column<int>(type: "int", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AddressModels", x => x.AddressId);
+                    table.ForeignKey(
+                        name: "FK_AddressModels_Users_Userid",
+                        column: x => x.Userid,
+                        principalTable: "Users",
+                        principalColumn: "Userid",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "notes",
                 columns: table => new
                 {
@@ -55,6 +78,48 @@ namespace RepositoryLayer.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Label",
+                columns: table => new
+                {
+                    LabelId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LabelName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NotesId = table.Column<int>(type: "int", nullable: false),
+                    Userid = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Label", x => x.LabelId);
+                    table.ForeignKey(
+                        name: "FK_Label_notes_NotesId",
+                        column: x => x.NotesId,
+                        principalTable: "notes",
+                        principalColumn: "NotesId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Label_Users_Userid",
+                        column: x => x.Userid,
+                        principalTable: "Users",
+                        principalColumn: "Userid",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AddressModels_Userid",
+                table: "AddressModels",
+                column: "Userid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Label_NotesId",
+                table: "Label",
+                column: "NotesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Label_Userid",
+                table: "Label",
+                column: "Userid");
+
             migrationBuilder.CreateIndex(
                 name: "IX_notes_Userid",
                 table: "notes",
@@ -70,6 +135,12 @@ namespace RepositoryLayer.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AddressModels");
+
+            migrationBuilder.DropTable(
+                name: "Label");
+
             migrationBuilder.DropTable(
                 name: "notes");
 

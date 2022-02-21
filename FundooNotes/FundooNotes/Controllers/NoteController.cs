@@ -63,7 +63,7 @@ namespace FundooNotes.Controllers
                 var result = NoteBL.UpdateNotes(notes, NotesId);
                 if (result != null)
                 {
-                    return this.Ok(new { Success = true, message = "Updating a note Sucessfull", Response = result });
+                    return this.Ok(new { Success = true, message = "Updating a note Sucessfull",  });
                 }
                 else
                 {
@@ -129,14 +129,14 @@ namespace FundooNotes.Controllers
 
         [Authorize]
         [HttpPut("changeColor/{NotesId}/{color}")]
-        public IActionResult Color(int NotesId, string color)
+        public async Task <IActionResult> Color(int NotesId, string color)
         {
             try
             {
-                var result = NoteBL.Color(NotesId, color);
+                var  result = NoteBL.Color(NotesId, color);
                 if (result != null)
                 {
-                    return this.Ok(new { Success = true, message = "Color changed successfully", Response = result });
+                    return  this.Ok(new { Success = true, message = "Color changed successfully",  });
                 }
                 else
                 {
@@ -158,7 +158,7 @@ namespace FundooNotes.Controllers
                 await NoteBL.PinNote(NotesId);
                 if (result != null)
                 {
-                    return this.Ok(new { Success = true, message = "Pin changed successfully", Response = result });
+                    return this.Ok(new { Success = true, message = "Pin changed successfully" });
                 }
                 else
                 {
@@ -180,7 +180,7 @@ namespace FundooNotes.Controllers
                 await NoteBL.ArchieveNote(NotesId);
                 if (result != null)
                 {
-                    return this.Ok(new { Success = true, message = "Archieve changed successfully", Response = result });
+                    return this.Ok(new { Success = true, message = "Archieve changed successfully"  });
                 }
                 else
                 {
@@ -202,7 +202,7 @@ namespace FundooNotes.Controllers
                 await NoteBL.TrashNote(NotesId);
                 if (result != null)
                 {
-                    return this.Ok(new { Success = true, message = "Trash changed successfully", Response = result });
+                    return this.Ok(new { Success = true, message = "Trash changed successfully"  });
                 }
                 else
                 {

@@ -73,6 +73,9 @@ namespace FundooNotes
             services.AddTransient<INoteRL, NoteRL>();
             services.AddTransient<ILabelBL, LabelBL>();
             services.AddTransient<ILabelRL, LabelRL>();
+            services.AddTransient<IUserAddressBL, UserAddressBL>();
+            services.AddTransient<IUserAddresRL, UserAddressRL>();
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -33,10 +33,10 @@ namespace RepositoryLayer.Services
                 note.Title = notePostModel.Title;
                 note.Description = notePostModel.Description;
                 note.color = notePostModel.color;
-                note.IsArchive = notePostModel.IsArchive;
-                note.IsTrash = notePostModel.IsTrash;
-                note.IsPin = notePostModel.IsPin;
-                note.IsReminder = notePostModel.IsReminder;
+                note.IsArchive = false;
+                note.IsTrash = false;
+                note.IsPin = false;
+                note.IsReminder = false;
                 note.ModifiedDate = DateTime.Now;
                 note.CreatedDate = DateTime.Now;
                 dbContext.notes.Add(note);
@@ -118,7 +118,8 @@ namespace RepositoryLayer.Services
             {
                 var note = dbContext.notes.FirstOrDefault(u => u.NotesId == NotesId);
                 note.color = color;
-                await dbContext.SaveChangesAsync();
+                 await dbContext.SaveChangesAsync();
+                 await dbContext.notes.ToListAsync();
             }
             catch (Exception e)
             {

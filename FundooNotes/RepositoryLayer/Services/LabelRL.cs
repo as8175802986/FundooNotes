@@ -84,7 +84,7 @@ namespace RepositoryLayer.Services
 
         public async Task<List<Label>> GetAllLabels(int Userid)
         {
-            Label labels = new Label();
+            Label label = new Label();
             try
             {
                 return await dbContext.Label.Where(u => u.Userid == Userid)
@@ -99,7 +99,7 @@ namespace RepositoryLayer.Services
         }
 
 
-        async Task<List<Entities.Label>> ILabelRL.GetLabelsByNoteID(int Userid, int NotesId)
+        async Task<List<Label>> ILabelRL.GetLabelsByNoteID(int Userid, int NotesId)
         {
             try
             {
@@ -113,9 +113,8 @@ namespace RepositoryLayer.Services
                 throw;
             }
         }
+        
     }
-
-
 
 }
 
