@@ -45,6 +45,9 @@ namespace FundooNotes
             {
                 options.Configuration = "localhost:6379";
             });
+            services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+           );
             services.AddSwaggerGen(setup =>
             {
                 // Include 'SecurityScheme' to use JWT Authentication
@@ -75,6 +78,8 @@ namespace FundooNotes
             services.AddTransient<ILabelRL, LabelRL>();
             services.AddTransient<IUserAddressBL, UserAddressBL>();
             services.AddTransient<IUserAddresRL, UserAddressRL>();
+            services.AddTransient<ICollabBL, CollabBL>();
+            services.AddTransient<ICollabRL, CollabRL>();
 
             services.AddAuthentication(x =>
             {

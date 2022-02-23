@@ -63,7 +63,7 @@ namespace BusinessLayer.Services
             }
         }
 
-        async Task<List<RepositoryLayer.Entities.Label>> ILabelBL.GetAllLabels(int Userid)
+        async Task<List<LableResponse>> ILabelBL.GetAllLabels(int Userid)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace BusinessLayer.Services
             }
         }
 
-        
+
     }
 }
 

@@ -24,6 +24,7 @@ namespace RepositoryLayer.Entities
       
         public DateTime RegisteredDate { get; set; }
         public DateTime ModifiedDate { get; set; }
+        
 
         public ICollection<Note> Notes { get; set; }
         public virtual ICollection<AddressModel> AddressModels { get; set; }

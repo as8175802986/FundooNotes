@@ -15,7 +15,7 @@ namespace RepositoryLayer.Entities
         public int NotesId { get; set; }
 
         [ForeignKey("Users")]
-        public int Userid { get; set; }
+        public int? Userid { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public bool IsReminder { get; set; }

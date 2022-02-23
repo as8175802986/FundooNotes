@@ -9,6 +9,7 @@ using RepositoryLayer.Entities;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace RepositoryLayer.Services
 {
     public class LabelRL : ILabelRL
@@ -82,15 +83,27 @@ namespace RepositoryLayer.Services
             }
         }
 
-        public async Task<List<Label>> GetAllLabels(int Userid)
+        public async Task<List<LableResponse>> GetAllLabels(int Userid)
         {
             Label label = new Label();
             try
             {
                 return await dbContext.Label.Where(u => u.Userid == Userid)
-                    .Include(u => u.Notes)
-                    .Include(u => u.User)
-                    .ToListAsync();
+                    .Join(dbContext.Users,
+                l => l.Userid,
+                u => u.Userid,
+                (l, u) => new LableResponse
+                {
+                    Userid = (int)l.Userid,
+                    email = u.email,
+                    LabelName = l.LabelName,
+                    Fname = u.Fname
+
+                }).ToListAsync();
+
+                //.Include(u => u.Notes)
+                //.Include(u => u.User)
+                //.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -99,7 +112,7 @@ namespace RepositoryLayer.Services
         }
 
 
-        async Task<List<Label>> ILabelRL.GetLabelsByNoteID(int Userid, int NotesId)
+        public async Task<List<Label>> GetLabelsByNoteID(int Userid, int NotesId) 
         {
             try
             {
@@ -113,10 +126,10 @@ namespace RepositoryLayer.Services
                 throw;
             }
         }
-        
     }
-
 }
+
+
 
     
 

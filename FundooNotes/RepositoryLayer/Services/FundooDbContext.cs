@@ -11,12 +11,15 @@ namespace RepositoryLayer.Services
 {
     public class FundooDbContext : DbContext
     {
+        
+
         public FundooDbContext(DbContextOptions options) : base(options)
         { }
         public DbSet<UserModel> Users { get; set; }
         public DbSet<Note> notes { get; set; }
         public DbSet<Label> Label { get; set; }
         public DbSet<AddressModel> AddressModels { get; set; }
+        public DbSet<Collabarator> Collabarators { get; set; }
         protected override void
             OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -52,6 +52,34 @@ namespace RepositoryLayer.Migrations
                     b.ToTable("AddressModels");
                 });
 
+            modelBuilder.Entity("RepositoryLayer.Entities.Collabarator", b =>
+                {
+                    b.Property<int>("CollabId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CollabEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NotesId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Userid")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UsersUserid")
+                        .HasColumnType("int");
+
+                    b.HasKey("CollabId");
+
+                    b.HasIndex("NotesId");
+
+                    b.HasIndex("UsersUserid");
+
+                    b.ToTable("Collabarators");
+                });
+
             modelBuilder.Entity("RepositoryLayer.Entities.Label", b =>
                 {
                     b.Property<int>("LabelId")
@@ -63,10 +91,10 @@ namespace RepositoryLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NotesId")
+                    b.Property<int?>("NotesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Userid")
+                    b.Property<int?>("Userid")
                         .HasColumnType("int");
 
                     b.HasKey("LabelId");
@@ -109,7 +137,7 @@ namespace RepositoryLayer.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Userid")
+                    b.Property<int?>("Userid")
                         .HasColumnType("int");
 
                     b.Property<string>("color")
@@ -171,19 +199,30 @@ namespace RepositoryLayer.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("RepositoryLayer.Entities.Collabarator", b =>
+                {
+                    b.HasOne("RepositoryLayer.Entities.Note", "notes")
+                        .WithMany()
+                        .HasForeignKey("NotesId");
+
+                    b.HasOne("RepositoryLayer.Entities.UserModel", "Users")
+                        .WithMany()
+                        .HasForeignKey("UsersUserid");
+
+                    b.Navigation("notes");
+
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("RepositoryLayer.Entities.Label", b =>
                 {
                     b.HasOne("RepositoryLayer.Entities.Note", "Notes")
                         .WithMany()
-                        .HasForeignKey("NotesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("NotesId");
 
                     b.HasOne("RepositoryLayer.Entities.UserModel", "User")
                         .WithMany()
-                        .HasForeignKey("Userid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Userid");
 
                     b.Navigation("Notes");
 
@@ -194,9 +233,7 @@ namespace RepositoryLayer.Migrations
                 {
                     b.HasOne("RepositoryLayer.Entities.UserModel", "Users")
                         .WithMany("Notes")
-                        .HasForeignKey("Userid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Userid");
 
                     b.Navigation("Users");
                 });

@@ -89,7 +89,7 @@ namespace FundooNotes.Controllers
             try
             {
                 int Userid = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "userId").Value);
-                var LabelList = new List<Label>();
+                var LabelList = new List<LableResponse>();
                 var NoteList = new List<Note>();
                 LabelList = await labelBL.GetAllLabels(Userid);
 

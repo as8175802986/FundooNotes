@@ -129,14 +129,14 @@ namespace FundooNotes.Controllers
 
         [Authorize]
         [HttpPut("changeColor/{NotesId}/{color}")]
-        public async Task <IActionResult> Color(int NotesId, string color)
+        public IActionResult Color(int NotesId, string color)
         {
             try
             {
-                var  result = NoteBL.Color(NotesId, color);
+                var result = NoteBL.Color(NotesId, color);
                 if (result != null)
                 {
-                    return  this.Ok(new { Success = true, message = "Color changed successfully",  });
+                    return this.Ok(new { Success = true, message = "Color changed successfully", });
                 }
                 else
                 {

@@ -56,7 +56,7 @@ namespace RepositoryLayer.Migrations
                 {
                     NotesId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Userid = table.Column<int>(type: "int", nullable: false),
+                    Userid = table.Column<int>(type: "int", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsReminder = table.Column<bool>(type: "bit", nullable: false),
@@ -75,7 +75,35 @@ namespace RepositoryLayer.Migrations
                         column: x => x.Userid,
                         principalTable: "Users",
                         principalColumn: "Userid",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Collabarators",
+                columns: table => new
+                {
+                    CollabId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CollabEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NotesId = table.Column<int>(type: "int", nullable: true),
+                    Userid = table.Column<int>(type: "int", nullable: true),
+                    UsersUserid = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Collabarators", x => x.CollabId);
+                    table.ForeignKey(
+                        name: "FK_Collabarators_notes_NotesId",
+                        column: x => x.NotesId,
+                        principalTable: "notes",
+                        principalColumn: "NotesId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Collabarators_Users_UsersUserid",
+                        column: x => x.UsersUserid,
+                        principalTable: "Users",
+                        principalColumn: "Userid",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,8 +113,8 @@ namespace RepositoryLayer.Migrations
                     LabelId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LabelName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NotesId = table.Column<int>(type: "int", nullable: false),
-                    Userid = table.Column<int>(type: "int", nullable: false)
+                    NotesId = table.Column<int>(type: "int", nullable: true),
+                    Userid = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -109,6 +137,16 @@ namespace RepositoryLayer.Migrations
                 name: "IX_AddressModels_Userid",
                 table: "AddressModels",
                 column: "Userid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Collabarators_NotesId",
+                table: "Collabarators",
+                column: "NotesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Collabarators_UsersUserid",
+                table: "Collabarators",
+                column: "UsersUserid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Label_NotesId",
@@ -137,6 +175,9 @@ namespace RepositoryLayer.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AddressModels");
+
+            migrationBuilder.DropTable(
+                name: "Collabarators");
 
             migrationBuilder.DropTable(
                 name: "Label");
